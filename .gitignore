@@ -1,0 +1,37 @@
+# Compiled Object files & Executables
+*.o
+*.obj
+*.exe
+*.out
+*.app
+*.so
+*.dll
+*.dylib
+
+# Build directories
+bin/
+build/
+dist/
+*.dSYM/
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+
+# IDE & Editor metadata
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# HPC / Job Scheduler logs
+*.log
+slurm-*.out

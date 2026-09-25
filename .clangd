@@ -1,0 +1,12 @@
+CompileFlags:
+  Add:
+    - "-nocudainc"
+    - "-nocudalib"
+    - "--cuda-host-only"
+    - "-Wno-unknown-cuda-version"
+
+Diagnostics:
+  Suppress:
+    - "drv_no_such_device_lib"
+    - "cannot_find_cuda"
+    - "pp_file_not_found"
