@@ -41,11 +41,6 @@ function Build-Binaries {
         g++ -O2 -fopenmp (Join-Path $SrcDir "matrix_openmp.cpp") -o (Join-Path $BinDir "matrix_openmp_cpp.exe")
     }
 
-    if (Get-Command nvcc -ErrorAction SilentlyContinue) {
-        Write-Host "  [>] Compiling CUDA Kernel (matrix_cuda.cu)..."
-        nvcc -O2 (Join-Path $SrcDir "matrix_cuda.cu") -o (Join-Path $BinDir "matrix_cuda_cu.exe")
-    }
-
     Write-Host "[+] Build complete. Binaries stored in $BinDir" -ForegroundColor Green
 }
 

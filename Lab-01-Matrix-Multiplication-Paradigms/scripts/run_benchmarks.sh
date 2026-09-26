@@ -49,12 +49,6 @@ check_toolchains() {
         echo -e "  [-] Open MPI C Compiler     : ${COLOR_YELLOW}Skipped (Not Installed)${COLOR_RESET}"
     fi
 
-    if command -v nvcc >/dev/null 2>&1; then
-        echo -e "  [+] NVIDIA NVCC Compiler    : $(nvcc --version | grep release | head -n1)"
-    else
-        echo -e "  [-] NVIDIA NVCC Compiler    : ${COLOR_YELLOW}Skipped (No CUDA Device / Toolkit)${COLOR_RESET}"
-    fi
-
     if command -v python3 >/dev/null 2>&1; then
         echo -e "  [+] Python 3 Runtime        : $(python3 --version)"
     elif command -v python >/dev/null 2>&1; then
@@ -95,14 +89,6 @@ compile_all() {
         mpicxx -O2 "${SRC_DIR}/matrix_mpi.cpp" -o "${BIN_DIR}/matrix_mpi_cpp"
     fi
 
-    # 4. CUDA C & C++
-    if command -v nvcc >/dev/null 2>&1; then
-        echo -e "  [>] Compiling CUDA Kernel (matrix_cuda.cu)..."
-        nvcc -O2 "${SRC_DIR}/matrix_cuda.cu" -o "${BIN_DIR}/matrix_cuda_cu"
-        echo -e "  [>] Compiling CUDA C++ (matrix_cuda.cpp)..."
-        nvcc -O2 "${SRC_DIR}/matrix_cuda.cpp" -o "${BIN_DIR}/matrix_cuda_cpp"
-    fi
-
     echo -e "${COLOR_GREEN}[+] Compilation Complete! Binaries placed in: ${BIN_DIR}${COLOR_RESET}"
 }
 
@@ -123,11 +109,6 @@ run_quick_tests() {
     if [ -f "${BIN_DIR}/matrix_mpi_c" ] && command -v mpirun >/dev/null 2>&1; then
         echo -e "\n--- Running MPI C (2 Processes) ---"
         mpirun -np 2 "${BIN_DIR}/matrix_mpi_c" "${test_size}"
-    fi
-
-    if [ -f "${BIN_DIR}/matrix_cuda_cu" ]; then
-        echo -e "\n--- Running CUDA GPU ---"
-        "${BIN_DIR}/matrix_cuda_cu" "${test_size}"
     fi
 }
 
